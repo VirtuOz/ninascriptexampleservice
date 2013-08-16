@@ -35,6 +35,20 @@ app.get('/weather', function (req, res)
     }
 });
 
+app.get('/phonecall', function(req, res)
+{
+    var twilio = require('twilio');
+    var resp = new twilio.TwimlResponse();
+
+    resp.say('Welcome to Twilio!');
+    resp.say('Please let us know if we can help during your development.', {
+        voice:'woman',
+        language:'en-gb'
+    });
+
+    res.send(resp.toString());
+});
+
 var port = process.env.PORT || 3000;
 app.listen(port);
 console.log('Listening on port ' + port);
