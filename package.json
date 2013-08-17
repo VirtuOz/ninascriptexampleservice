@@ -7,7 +7,7 @@
         "email": "kevan.dunsmore@nuance.com"
     },
     "dependencies": {
-        "twilio": "0.8.1",
+        "twilio":"1.1.4",
         "futures": "2.3.1",
         "underscore": "1.4.4",
         "underscore.string": "2.3.1",
