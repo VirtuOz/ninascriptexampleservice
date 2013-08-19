@@ -74,6 +74,13 @@ var smsHandler = function (req, res)
     };
     client.sms.messages.create(twilioSms);
 
+    twilioSms = {
+        to: req.query.liveAgentPhoneNumber,
+        from: '15107358626',
+        body: 'Thanks for taking part in this demo. You were a great live agent! - Nina'
+    };
+    client.sms.messages.create(twilioSms);
+
     res.send(200);
 };
 app.get('/sms', smsHandler);
