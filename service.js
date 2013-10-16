@@ -4,46 +4,13 @@
 var express = require('express');
 var app = express();
 
-app.get('/weather', function (req, res)
-{
-    var apiKey = req.query.apiKey;
-    if (!apiKey)
-    {
-        res.send(401);
-    }
-    else
-    {
-        var response = {
-            city: req.query.city
-        };
-
-        if (response.city == 'san francisco')
-        {
-            response.temperature = 71;
-            response.outlook = 'sunny';
-            response.knownCity = true;
-        }
-        else if (response.city == 'edinburgh')
-        {
-            response.temperature = 40;
-            response.outlook = 'rainy';
-            response.knownCity = true;
-        }
-        else
-        {
-            response.knownCity = false;
-        }
-
-        res.send(response);
-    }
-});
-
 var phoneCallHandler = function (req, res)
 {
     var twilio = require('twilio');
     var resp = new twilio.TwimlResponse();
 
-    resp.say("Hi, this is Nina, calling from Citibank! Thanks for requesting a call back. Your live agent will be with you shortly.", {
+    resp.say("Hi, this is Nina, calling from Ninacom! Thanks for requesting a call back. " +
+        "Your live agent will be with you shortly.", {
         voice: 'woman',
         language: 'en-us'
     });
@@ -66,7 +33,8 @@ app.post('/phonecall', phoneCallHandler);
 var smsHandler = function (req, res)
 {
     var twilio = require('twilio');
-    var client = new twilio.RestClient('AC7b9b6eb19ff245fca1bf37fae1505147', 'ae87da74a5cfd04e53e91d0d3306d0cc');
+    var client = new twilio.RestClient('AC7b9b6eb19ff245fca1bf37fae1505147',
+        'ae87da74a5cfd04e53e91d0d3306d0cc');
     var twilioSms = {
         to: req.query.phoneNumber,
         from: '15107358626',
