@@ -4,13 +4,14 @@
 var express = require('express');
 var app = express();
 
-var phoneCallHandler = function (req, res)
-{
+var phoneCallHandler = function (req, res) {
     var twilio = require('twilio');
     var resp = new twilio.TwimlResponse();
 
-    resp.say("Hi, this is Nina, calling from Ninacom! Thanks for requesting a call back. " +
-        "Your live agent will be with you shortly.", {
+    var textToSay = req.query.textToSay || "Hi, this is Nina! Thanks for requesting a call back. I'm connecting you " +
+        "with your live agent.";
+
+    resp.say(textToSay, {
         voice: 'woman',
         language: 'en-us'
     });
@@ -19,8 +20,7 @@ var phoneCallHandler = function (req, res)
     var phoneNumber = req.query.phoneNumber;
 
     // Connect with the live agent operator.
-    if (liveAgentPhoneNumber && liveAgentPhoneNumber != phoneNumber)
-    {
+    if (liveAgentPhoneNumber && liveAgentPhoneNumber != phoneNumber) {
         resp.dial(liveAgentPhoneNumber);
     }
 
@@ -30,8 +30,7 @@ var phoneCallHandler = function (req, res)
 app.get('/phonecall', phoneCallHandler);
 app.post('/phonecall', phoneCallHandler);
 
-var smsHandler = function (req, res)
-{
+var smsHandler = function (req, res) {
     var twilio = require('twilio');
     var client = new twilio.RestClient('AC7b9b6eb19ff245fca1bf37fae1505147',
         'ae87da74a5cfd04e53e91d0d3306d0cc');
