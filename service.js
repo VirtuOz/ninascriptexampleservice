@@ -53,6 +53,20 @@ var smsHandler = function (req, res) {
 app.get('/sms', smsHandler);
 app.post('/sms', smsHandler);
 
+var ipHandler = function(req, res){
+    var ip = req.connection.remoteAddress;
+    res.header('Charset', 'utf-8');
+
+    if(req.query && req.query.callback){
+        res.header('Content-Type', 'application/json');
+        res.send(req.query.callback + '(' + JSON.stringify(ip) + ');' );
+    }else{
+        res.header('Content-Type', 'text/plain');
+        res.send(ip);
+    }
+};
+app.get('/whatsmyip', ipHandler);
+
 var port = process.env.PORT || 3000;
 app.listen(port);
 console.log('Listening on port ' + port);
